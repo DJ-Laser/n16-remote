@@ -3,4 +3,5 @@
   (lib (name "Seeed Studio XIAO Series Library")(type "KiCad")(uri "${KIPRJMOD}/libs/OPL_Kicad_Library-master/Seeed Studio XIAO Series Library")(options "")(descr ""))
   (lib (name "ScottoKeebs_MX")(type "KiCad")(uri "${KIPRJMOD}/libs/ScottoKicad/footprints/ScottoKeebs_MX.pretty")(options "")(descr ""))
   (lib (name "ScottoKeebs_Components")(type "KiCad")(uri "${KIPRJMOD}/libs/ScottoKicad/footprints/ScottoKeebs_Components.pretty")(options "")(descr ""))
+  (lib (name "Custom")(type "KiCad")(uri "${KIPRJMOD}/libs/Custom.pretty")(options "")(descr ""))
 )

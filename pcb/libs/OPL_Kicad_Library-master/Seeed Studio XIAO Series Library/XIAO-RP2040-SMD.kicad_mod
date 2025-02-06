@@ -422,7 +422,7 @@
 		(layers "F.Cu" "F.Paste" "F.Mask")
 		(uuid "7adfba87-f861-42a5-bb73-c3f9fac53180")
 	)
-	(model "${KIPRJMOD}/XIAO_RP2040.step"
+	(model "${KIPRJMOD}/libs/XIAO_RP2040.step"
 		(offset
 			(xyz 0 0 0)
 		)
