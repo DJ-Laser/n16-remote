@@ -19,7 +19,7 @@
 	(property "Value" "LED_SK6812MINI"
 		(at 0.25 -3 0)
 		(unlocked yes)
-		(layer "F.SilkS")
+		(layer "B.SilkS")
 		(hide yes)
 		(uuid "38e03dd6-2fca-4560-bc57-39271fd07201")
 		(effects
@@ -27,6 +27,7 @@
 				(size 1 1)
 				(thickness 0.15)
 			)
+			(justify mirror)
 		)
 	)
 	(property "Footprint" ""
@@ -72,9 +73,20 @@
 		)
 	)
 	(attr through_hole)
+	(fp_circle
+		(center -2 1.4)
+		(end -1.9 1.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill solid)
+		(layer "B.SilkS")
+		(uuid "2ba821e3-8c68-4896-ad73-4776f3ec99a0")
+	)
 	(fp_poly
 		(pts
-			(xy -4 0.5) (xy -3.5 0.5) (xy -3.5 1)
+			(xy -3.9 0.55) (xy -3.5 0.55) (xy -3.5 0.95)
 		)
 		(stroke
 			(width 0.1)
@@ -82,7 +94,7 @@
 		)
 		(fill solid)
 		(layer "F.SilkS")
-		(uuid "5ba26966-e21b-4d1a-93e1-9406a0a7b0e8")
+		(uuid "e6e9f570-e557-47a1-b082-5795a450269a")
 	)
 	(fp_line
 		(start -2.8 -0.65)
@@ -163,6 +175,18 @@
 		)
 		(layer "Dwgs.User")
 		(uuid "fcd468a0-6449-42b6-9e63-2b459f880b69")
+	)
+	(fp_poly
+		(pts
+			(xy -1.1 1.5) (xy -1.7 1.5) (xy -1.7 0.9)
+		)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill solid)
+		(layer "Dwgs.User")
+		(uuid "cdb04454-8c36-4812-be1f-3b04f10f0567")
 	)
 	(fp_line
 		(start -1.7 -1.5)
