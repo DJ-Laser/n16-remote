@@ -21,7 +21,8 @@
       combine [
         stable.cargo
         stable.rustc
-        targets.${microcontrollerTarget}.latest.rust-std
+        stable.rustfmt
+        targets.${microcontrollerTarget}.stable.rust-std
       ];
   in {
     devShells.${system}.default = pkgs.mkShell {
