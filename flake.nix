@@ -19,10 +19,10 @@
     microcontrollerTarget = "thumbv6m-none-eabi";
     rustToolchain = with fenix.packages.${system};
       combine [
-        stable.cargo
-        stable.rustc
-        stable.rustfmt
-        targets.${microcontrollerTarget}.stable.rust-std
+        default.cargo
+        default.rustc
+        default.rustfmt
+        targets.${microcontrollerTarget}.latest.rust-std
       ];
   in {
     devShells.${system}.default = pkgs.mkShell {
