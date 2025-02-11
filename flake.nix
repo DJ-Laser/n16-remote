@@ -22,6 +22,7 @@
         default.cargo
         default.rustc
         default.rustfmt
+        complete.rust-src
         targets.${microcontrollerTarget}.latest.rust-std
       ];
   in {
