@@ -1,51 +1,37 @@
-use super::Debouncer;
+use embassy_time::Duration;
+
+use super::{Debouncer, DebouncerConfig};
 
 pub struct CounterDebouncer {
-    changed_ms: u16,
+    changed_ms: Duration,
 }
 
 impl Debouncer for CounterDebouncer {
-    type Config = CounterDebouncerConfig;
-
     fn debounce(
         &mut self,
         stored: bool,
         current: bool,
-        elapsed_ms: u16,
-        config: &Self::Config,
+        elapsed: Duration,
+        config: &DebouncerConfig,
     ) -> bool {
-        if elapsed_ms == 0 {
+        if elapsed.as_millis() == 0 {
             return stored;
         }
 
         if stored == current {
-            self.changed_ms = self.changed_ms.saturating_sub(elapsed_ms);
+            self.changed_ms = self
+                .changed_ms
+                .checked_sub(elapsed)
+                .unwrap_or(Duration::MIN);
             return stored;
         } else if self.changed_ms < config.threshold_ms() {
-            self.changed_ms = self.changed_ms.saturating_add(elapsed_ms);
+            self.changed_ms = self
+                .changed_ms
+                .checked_add(elapsed)
+                .unwrap_or(Duration::MAX);
             return stored;
         } else {
             return current;
         }
-    }
-}
-
-pub struct CounterDebouncerConfig {
-    threshold_ms: u16,
-}
-
-impl CounterDebouncerConfig {
-    pub fn new(threshold_ms: u16) -> Self {
-        Self { threshold_ms }
-    }
-
-    pub fn threshold_ms(&self) -> u16 {
-        self.threshold_ms
-    }
-}
-
-impl Default for CounterDebouncerConfig {
-    fn default() -> Self {
-        Self::new(super::DEFAULT_THRESHOLD_MS)
     }
 }

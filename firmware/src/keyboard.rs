@@ -1,4 +1,4 @@
-use debouncer::Debouncer;
+use debouncer::{Debouncer, DebouncerConfig};
 use embassy_rp::gpio::{Input, Output};
 use embassy_time::{Duration, Instant};
 
@@ -24,20 +24,19 @@ impl<D: Debouncer> KeyState<D> {
         self.pressed
     }
 
-    fn update(&mut self, switch_state: bool, elapsed_ms: u16, debouncer_config: &D::Config) {
+    fn update(&mut self, switch_state: bool, elapsed: Duration, debouncer_config: &D::Config) {
         self.pressed =
             self.debouncer
-                .debounce(self.pressed, switch_state, elapsed_ms, debouncer_config)
+                .debounce(self.pressed, switch_state, elapsed, debouncer_config)
     }
 }
 
-pub struct Keyboard<S: KeyScanner> {
+pub struct Keyboard<S: KeyScanner, D: Debouncer> {
     last_keypress_time: Option<Instant>,
     key_scanner: S,
+    debouncer_config: DebouncerConfig,
 }
 
 impl<S: KeyScanner> Keyboard<S> {
-    pub async fn run(&mut self) {
-        // run the KeyScanner in a loop
-    }
+    pub async fn run(&mut self) {}
 }
