@@ -1,7 +1,8 @@
 use debouncer::{Debouncer, DebouncerConfig};
-use embassy_time::{Duration, Instant};
+use embassy_time::{Duration, Instant, Timer};
 
 mod debouncer;
+mod matrix;
 
 pub trait KeyScanner<const NUM_KEYS: usize> {
     /// Wait until a key is pressed. Should return instantly if a key is already pressed
@@ -58,7 +59,9 @@ impl<const NUM_KEYS: usize, S: KeyScanner<NUM_KEYS>, D: Debouncer> Keyboard<NUM_
                     self.key_states[key].update(switch_state, elapsed, &self.debouncer_config);
                     self.last_keypress_time = Some(Instant::now());
                 })
-                .await
+                .await;
+
+            Timer::after_micros(100).await;
         }
     }
 }
