@@ -8,10 +8,10 @@ pub trait KeyScanner<const NUM_KEYS: usize> {
     async fn wait_for_keypress(&mut self);
 
     /// Scan the keyboard once and update the keyboard state
-    async fn scan_keys<D: Debouncer>(&mut self, key_states: &mut [KeyState<D>; NUM_KEYS]);
+    async fn scan_keys<F: FnMut(usize, bool)>(&mut self, update_key: F);
 }
 
-pub struct KeyState<D: Debouncer> {
+struct KeyState<D: Debouncer> {
     pressed: bool,
     debouncer: D,
 }
@@ -48,11 +48,17 @@ impl<const NUM_KEYS: usize, S: KeyScanner<NUM_KEYS>, D: Debouncer> Keyboard<NUM_
                 if last_keypress_time.elapsed() > self.time_before_idle {
                     self.last_keypress_time = None;
                     self.key_scanner.wait_for_keypress().await;
-                    self.last_keypress_time = Some(Instant::now())
                 }
             }
 
-            self.key_scanner.scan_keys(&mut self.key_states).await
+            let elapsed = Instant::now() - self.last_keypress_time.unwrap_or(Instant::now());
+
+            self.key_scanner
+                .scan_keys(|key: usize, switch_state: bool| {
+                    self.key_states[key].update(switch_state, elapsed, &self.debouncer_config);
+                    self.last_keypress_time = Some(Instant::now());
+                })
+                .await
         }
     }
 }
