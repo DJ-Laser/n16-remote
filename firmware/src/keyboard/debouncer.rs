@@ -2,7 +2,7 @@ use embassy_time::Duration;
 
 pub mod counter_debouncer;
 
-pub const DEFAULT_THRESHOLD_DURATION: Duration = Duration::from_millis(10);
+pub const DEFAULT_DEBOUNCE_DURATION: Duration = Duration::from_millis(5);
 
 pub trait Debouncer {
     fn debounce(
@@ -30,6 +30,6 @@ impl DebouncerConfig {
 
 impl Default for DebouncerConfig {
     fn default() -> Self {
-        Self::new(DEFAULT_THRESHOLD_DURATION)
+        Self::new(DEFAULT_DEBOUNCE_DURATION)
     }
 }
