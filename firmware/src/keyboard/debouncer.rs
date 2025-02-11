@@ -1,3 +1,5 @@
+pub mod counter_debouncer;
+
 pub const DEFAULT_THRESHOLD_MS: u16 = 10;
 
 pub trait Debouncer {
