@@ -1,16 +1,13 @@
+use core::array;
+
+use config::KeyboardConfig;
 use debouncer::{Debouncer, DebouncerConfig};
 use embassy_time::{Duration, Instant, Timer};
+use scanner::KeyScanner;
 
+mod config;
 mod debouncer;
-mod matrix;
-
-pub trait KeyScanner<const NUM_KEYS: usize> {
-    /// Wait until a key is pressed. Should return instantly if a key is already pressed
-    async fn wait_for_keypress(&mut self);
-
-    /// Scan the keyboard once and update the keyboard state
-    async fn scan_keys<F: FnMut(usize, bool)>(&mut self, update_key: F);
-}
+mod scanner;
 
 struct KeyState<D: Debouncer> {
     pressed: bool,
@@ -18,6 +15,13 @@ struct KeyState<D: Debouncer> {
 }
 
 impl<D: Debouncer> KeyState<D> {
+    pub fn new() -> Self {
+        Self {
+            pressed: false,
+            debouncer: D::default(),
+        }
+    }
+
     pub fn pressed(&self) -> bool {
         self.pressed
     }
@@ -34,19 +38,37 @@ impl<D: Debouncer> KeyState<D> {
     }
 }
 
+impl<D: Debouncer> Default for KeyState<D> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 pub struct Keyboard<const NUM_KEYS: usize, S: KeyScanner<NUM_KEYS>, D: Debouncer> {
-    debouncer_config: DebouncerConfig,
+    config: KeyboardConfig,
     last_keypress_time: Option<Instant>,
-    time_before_idle: Duration,
     key_scanner: S,
     key_states: [KeyState<D>; NUM_KEYS],
 }
 
 impl<const NUM_KEYS: usize, S: KeyScanner<NUM_KEYS>, D: Debouncer> Keyboard<NUM_KEYS, S, D> {
+    pub fn new_with_config(key_scanner: S, config: KeyboardConfig) -> Self {
+        Self {
+            config,
+            key_scanner,
+            last_keypress_time: None,
+            key_states: array::from_fn(|_| KeyState::new()),
+        }
+    }
+
+    pub fn new(key_scanner: S) -> Self {
+        Self::new_with_config(key_scanner, KeyboardConfig::default())
+    }
+
     pub async fn run(&mut self) {
         loop {
             if let Some(last_keypress_time) = self.last_keypress_time {
-                if last_keypress_time.elapsed() > self.time_before_idle {
+                if last_keypress_time.elapsed() > self.config.time_before_idle() {
                     self.last_keypress_time = None;
                     self.key_scanner.wait_for_keypress().await;
                 }
@@ -56,7 +78,11 @@ impl<const NUM_KEYS: usize, S: KeyScanner<NUM_KEYS>, D: Debouncer> Keyboard<NUM_
 
             self.key_scanner
                 .scan_keys(|key: usize, switch_state: bool| {
-                    self.key_states[key].update(switch_state, elapsed, &self.debouncer_config);
+                    self.key_states[key].update(
+                        switch_state,
+                        elapsed,
+                        &self.config.debouncer_config(),
+                    );
                     self.last_keypress_time = Some(Instant::now());
                 })
                 .await;

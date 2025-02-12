@@ -2,9 +2,7 @@ use embassy_time::Duration;
 
 pub mod counter_debouncer;
 
-pub const DEFAULT_DEBOUNCE_DURATION: Duration = Duration::from_millis(5);
-
-pub trait Debouncer {
+pub trait Debouncer: Default {
     fn debounce(
         &mut self,
         stored: bool,
@@ -19,6 +17,8 @@ pub struct DebouncerConfig {
 }
 
 impl DebouncerConfig {
+    pub const DEFAULT_DEBOUNCE_DURATION: Duration = Duration::from_millis(5);
+
     pub fn new(threshold_ms: Duration) -> Self {
         Self { threshold_ms }
     }
@@ -30,6 +30,6 @@ impl DebouncerConfig {
 
 impl Default for DebouncerConfig {
     fn default() -> Self {
-        Self::new(DEFAULT_DEBOUNCE_DURATION)
+        Self::new(Self::DEFAULT_DEBOUNCE_DURATION)
     }
 }
