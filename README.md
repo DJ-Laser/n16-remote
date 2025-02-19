@@ -4,6 +4,8 @@ A small 10-key macropad for controlling my n16 wm setup
 Features arrow keys, size up and down keys, three misc function keys, and a "capslock esque" key to modify their behavior (eg arrows: navigate -> move window)
 Each switch is mounted north-facing for per-key north facing rgb, which can be used to show the leyer/modfier state or just to be rgb and flashy
 
+Cad: [onshape document](https://cad.onshape.com/documents/fadd4340fdcb2f9894b9d56e/w/4e9dbccf657b58782bca758e/e/9d8bbcccd8311ae2ad41f28e)
+
 Bom: [./bom.md](./bom.md)
 
 ![Screenshot from 2025-02-15 22-58-21](https://github.com/user-attachments/assets/fd0da736-be61-4a82-8529-b026311ee105)
