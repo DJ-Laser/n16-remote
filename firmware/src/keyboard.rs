@@ -6,8 +6,8 @@ use embassy_time::{Duration, Instant, Timer};
 use scanner::KeyScanner;
 
 mod config;
-mod debouncer;
-mod scanner;
+pub mod debouncer;
+pub mod scanner;
 
 struct KeyState<D: Debouncer> {
     pressed: bool,
