@@ -202,6 +202,17 @@
 		(uuid "94189dc1-14b5-4f17-b9d3-0163ed99e583")
 	)
 	(fp_circle
+		(center -9.045 -10.121)
+		(end -9.045 -10.375)
+		(stroke
+			(width 0.5)
+			(type solid)
+		)
+		(fill solid)
+		(layer "F.SilkS")
+		(uuid "dc606cc5-10bc-4635-81d1-fa27b1e6b4e2")
+	)
+	(fp_circle
 		(center -7.771 -9.404)
 		(end -7.771 -9.658)
 		(stroke
@@ -387,47 +398,28 @@
 		(thermal_bridge_angle 45)
 		(uuid "3780a4ef-348c-4241-b04b-2cb4f7127fa2")
 	)
-	(pad "17" thru_hole circle
+	(pad "17" smd circle
 		(at -1.088 -8.378)
 		(size 1.7 1.7)
-		(drill 1.1)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "0bdbfb49-185c-45c6-8e16-071ef413798b")
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "ad890579-1e55-4b71-9d59-080a59598896")
 	)
-	(pad "18" thru_hole circle
+	(pad "18" smd circle
 		(at 1.452 -8.378)
 		(size 1.7 1.7)
-		(drill 1.1)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "b1a914a8-f80e-402c-89b5-9e084dd94082")
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "25d6fdae-01ac-4ca4-8702-55badc8bcbc8")
 	)
-	(pad "19" thru_hole circle
+	(pad "19" smd circle
 		(at -1.088 -5.838)
 		(size 1.7 1.7)
-		(drill 1.1)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "b7e7e296-c77c-47b0-909f-ec16861607b0")
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "e73ae295-736f-4acf-8ee1-0c120ebcebea")
 	)
-	(pad "20" thru_hole circle
+	(pad "20" smd circle
 		(at 1.452 -5.838)
 		(size 1.7 1.7)
-		(drill 1.1)
-		(layers "*.Cu" "*.Mask")
-		(remove_unused_layers no)
-		(uuid "40b09ea1-dcbc-46da-9ce9-d83ae42e967a")
-	)
-	(model "${KIPRJMOD}/libs/XIAO_RP2040.step"
-		(offset
-			(xyz 0 0 0)
-		)
-		(scale
-			(xyz 1 1 1)
-		)
-		(rotate
-			(xyz 0 0 0)
-		)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "7adfba87-f861-42a5-bb73-c3f9fac53180")
 	)
 )
